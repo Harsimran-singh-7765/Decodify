@@ -1,6 +1,6 @@
 import streamlit as st 
-from clone_repo import clone_repo ## add these function
-## from process_code import load_and_embed_repo 
+from clone_repo import clone_repo 
+from process_code import load_and_embed_repo 
 # from qa_bot import ask_question
 # from file_tree_utils import build_file_tree, describe_code_file
 import os
@@ -39,12 +39,22 @@ if page == "🏠 Home":
                     st.session_state.repo_url = repo_url
                     st.session_state.repo_path = repo_path
 
-            # with st.spinner("📦 Processing and embedding repo..."):
-            #     vectorstore, summary, readme_content = load_and_embed_repo(repo_path)
-            #     st.session_state.vectorstore = vectorstore
-            #     st.session_state.readme_summary = summary or None
-            #     st.session_state.readme_raw = readme_content or None
-            #     st.session_state.chat_history = []
-            #     st.session_state.selected_file_path = None
+            with st.spinner("📦 Processing and embedding repo..."):
+                vectorstore, summary, readme_content = load_and_embed_repo(repo_path)
+                st.session_state.vectorstore = vectorstore
+                st.session_state.readme_summary = summary or None
+                st.session_state.readme_raw = readme_content or None
+                st.session_state.chat_history = []
+                st.session_state.selected_file_path = None
 
             st.success("✅ Repo processed successfully! Switch to Chatbot or Decode tab.")
+
+    if st.session_state.readme_summary:
+        with st.expander("📖 README Summary", expanded=True):
+            st.markdown(st.session_state.readme_summary)
+    elif st.session_state.repo_path:
+        st.info("ℹ️ This repo doesn’t contain a valid README.md")
+
+    if st.session_state.readme_raw:
+        with st.expander("📝 Full README.md"):
+            st.code(st.session_state.readme_raw, language="markdown")
