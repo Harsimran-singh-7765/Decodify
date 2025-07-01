@@ -12,17 +12,16 @@ st.title("🚀 Decodify  -  GitHub Repo Decoded ")
 st.sidebar.title("🚀Decodify")
 page = st.sidebar.radio("Go to", ["🏠 Home", "🤖 Chatbot", "📂 Decode", "📈 Rate My Repo", "ℹ️ About"])
 
-
-
-# 🧠 Persistent session state
-
 for key in ["vectorstore", "repo_url", "repo_path", "chat_history", "readme_summary", "readme_raw", "selected_file_path"]:
 
     if key not in st.session_state:
         st.session_state[key] = None if key != "chat_history" else []
+
  
- 
-     # STEP 1: Only allow input if no repo_url yet
+if page == "🏠 Home":
+    st.subheader("🔗 Enter GitHub Repo URL:")
+    
+    # STEP 1: Only allow input if no repo_url yet
     if st.session_state.repo_url:
         st.success(f"✅ Repo Loaded: `{st.session_state.repo_url}`")
         st.info("🔄 Refresh the app or click below to enter a new repo.")
@@ -49,14 +48,3 @@ for key in ["vectorstore", "repo_url", "repo_path", "chat_history", "readme_summ
             #     st.session_state.selected_file_path = None
 
             st.success("✅ Repo processed successfully! Switch to Chatbot or Decode tab.")
-
-    
-    if st.session_state.readme_summary:
-        with st.expander("📖 README Summary", expanded=True):
-            st.markdown(st.session_state.readme_summary)
-    elif st.session_state.repo_path:
-        st.info("ℹ️ This repo doesn’t contain a valid README.md")
-
-    if st.session_state.readme_raw:
-        with st.expander("📝 Full README.md"):
-            st.code(st.session_state.readme_raw, language="markdown")
