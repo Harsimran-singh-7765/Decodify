@@ -1,4 +1,4 @@
-cloned_repo/
+cloned_repos/
 faiss_index/
 __pycache__/
 *.pyc
