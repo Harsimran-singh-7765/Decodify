@@ -202,3 +202,57 @@ elif page == "📂 Decode":
     else:
         st.warning("⚠️ Please load a repository first from the Home page.")
 
+elif page == "📈 Rate My Repo":
+    st.subheader("📈 AI Repo Rating")
+
+    if st.session_state.get("vectorstore"):
+        from langchain.docstore.document import Document
+
+        
+
+        with st.spinner("🧠 Collecting repo understanding..."):
+            try:
+                # Retrieve top documents from the vectorstore
+                similar_docs = st.session_state.vectorstore.similarity_search("Project overview and purpose", k=10)
+
+                combined_content = "\n\n---\n\n".join([doc.page_content[:2000] for doc in similar_docs])
+                
+                review_prompt = f"""
+                            You are a senior AI-powered developer and code reviewer.
+
+                            Given this codebase context, please:
+                            1. Give a star rating out of 5 for:
+                            - Code Quality
+                            - Project Structure
+                            - Clarity & Purpose
+                            - above the Net rating
+                            show rating in forms of stars for visual appeal , use streamlit.progress
+                            2. Explain in a human-friendly tone:
+                            - Main purpose of the project
+                            - Strengths and highlights
+                            - Weaknesses or bad practices
+                            - How the developer can improve
+                            3. Make it motivational but honest.
+                            don't be repitative , be presise with your judgment
+                            Here is the context of the repo (including code and structure):
+
+                {combined_content[:18000]}
+                """
+
+                response = ask_question(
+                    review_prompt,
+                    st.session_state.vectorstore,
+                    readme_text=st.session_state.readme_raw or ""
+                )
+
+                st.success("✅ Repo Review Complete!")
+                st.markdown("### 🧠 AI Review")
+                st.markdown(response)
+                
+
+
+            except Exception as e:
+                st.error(f"❌ Could not analyze repo: {e}")
+
+    else:
+        st.warning("⚠️ Please load and process a repository from the Home page first.")
