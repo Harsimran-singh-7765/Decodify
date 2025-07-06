@@ -42,10 +42,11 @@ In today's information-rich world, users struggle to:
 ## 🎥 Demo
 
 ### 🌐 Live Demo
-[**Try Decodify Live**](your-demo-link-here) ← *Click to interact with our AI agent*
 
-### 🎬 Video Walkthrough
-*[Add your demo video link here]*
+
+[Watch the demo video here](demo.mp4)
+
+
 
 ```
 🎥 Demo Highlights:
@@ -56,17 +57,12 @@ In today's information-rich world, users struggle to:
 └── Real-time learning and adaptation
 ```
 
-### 📸 Screenshots
-<details>
-<summary>View Interface Screenshots</summary>
 
-*Add your screenshots here showing:*
-- *Main chat interface*
-- *Agent reasoning process*
-- *Analytics dashboard*
-- *Configuration panel*
 
-</details>
+
+
+[Watch the demo video here](demo.mp4)
+
 
 ## 🏗️ System Architecture
 
